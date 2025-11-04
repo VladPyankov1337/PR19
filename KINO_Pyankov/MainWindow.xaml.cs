@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KINO_Pyankov.Classes;
+using System.Security.Cryptography;
 
 namespace KINO_Pyankov
 {
@@ -20,9 +22,19 @@ namespace KINO_Pyankov
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static MainWindow init;
         public MainWindow()
         {
             InitializeComponent();
+            OpenPage(new Pages.Kinoteatr.Main());
+            init = this;
         }
+        public void OpenPage(Page page)
+        {
+            frame.Navigate(page);
+        }
+
+        private void OpenKino(object sender, RoutedEventArgs e) => OpenPage(new Pages.Kinoteatr.Main());
+        private void OpenAfisha(object sender, RoutedEventArgs e) => OpenPage(new Pages.Afisha.Main());
     }
 }
