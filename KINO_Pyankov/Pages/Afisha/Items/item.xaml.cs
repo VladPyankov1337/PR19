@@ -29,7 +29,9 @@ namespace KINO_Pyankov.Pages.Afisha.Items
         public item(AfishaContext Item, Main main)
         {
             InitializeComponent();
-            kinoteatrs.Text = AllKinoteatrs.Find(x => x.Id == Item.IdKinoteatr).Name;
+            var kinoteatr = AllKinoteatrs.Find(x => x.Id == Item.IdKinoteatr);
+            kinoteatrs.Text = kinoteatr != null ? kinoteatr.Name : "Неизвестный кинотеатр";
+
             name.Text = Item.Name;
             date.Text = Item.Time.ToString("yyyy-MM-dd");
             time.Text = Item.Time.ToString("HH:mm");
@@ -43,8 +45,12 @@ namespace KINO_Pyankov.Pages.Afisha.Items
 
         private void DeleteRecord(object sender, RoutedEventArgs e)
         {
-            Item.Delete();
-            main.parent.Children.Remove(this);
+            if (MessageBox.Show("Вы уверены, что хотите удалить эту афишу?", "Подтверждение удаления",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                Item.Delete();
+                main.parent.Children.Remove(this);
+            }
         }
     }
 }

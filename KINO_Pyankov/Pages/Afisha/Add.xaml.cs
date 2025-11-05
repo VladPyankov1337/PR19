@@ -43,7 +43,8 @@ namespace KINO_Pyankov.Pages.Afisha
             }
             else
             {
-                kinoteatrs.SelectedIndex = kinoteatrs.Items.Count - 1;
+                if (kinoteatrs.Items.Count > 0)
+                    kinoteatrs.SelectedIndex = 0;
             }
         }
 
@@ -57,7 +58,7 @@ namespace KINO_Pyankov.Pages.Afisha
                 MessageBox.Show("Необходимо указать наименование");
                 return;
             }
-            if (kinoteatrs.SelectedIndex == kinoteatrs.Items.Count - 1)
+            if (kinoteatrs.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите кинотеатр");
                 return;
@@ -88,7 +89,7 @@ namespace KINO_Pyankov.Pages.Afisha
             {
                 AfishaContext newAfisha = new AfishaContext(
                 0,
-                AllKinoteatrs.Find(x => x.Name == kinoteatrs.SelectedItem).Id,
+                AllKinoteatrs[kinoteatrs.SelectedIndex].Id,
                 name.Text, dateTimeAfisha, Price);
                 newAfisha.Add();
                 MessageBox.Show("Запись успешно добавлена.");
@@ -98,7 +99,7 @@ namespace KINO_Pyankov.Pages.Afisha
             {
                 afisha = new AfishaContext(
                 afisha.Id,
-                AllKinoteatrs.Find(x => x.Name == kinoteatrs.SelectedItem).Id,
+                AllKinoteatrs[kinoteatrs.SelectedIndex].Id,
                 name.Text, dateTimeAfisha, Price);
                 afisha.Update();
                 MessageBox.Show("Запись успешно обновлена.");
